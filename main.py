@@ -1,53 +1,37 @@
 import random
-user_wins = 0
-computer_wins = 0
 
 options = ["rock", "paper", "scissors"]
+user_wins = 0
+computer_wins = 0
+rounds_played = 0
+
+print("Welcome to Rock, Paper, Scissors!")
+player_name = input("Please enter your name: ")
 
 while True:
-    user_input = input("Type Rock/Paper/Scissors or Q o quit: ").lower()
-    if user_input == "q":
+    print(f"\nRound {rounds_played + 1} - {player_name}: {user_wins} | Computer: {computer_wins}\n")
+    user_input = input("Type 'rock', 'paper', or 'scissors' to play or 'quit' to exit: ").lower()
+
+    if user_input == "quit":
         break
 
     if user_input not in options:
+        print("Invalid input. Please try again.")
         continue
 
-    random_number = random.randint(0, 2)
-    # 0=rock 1=paper 2=scissors
-    computer_pick = options[random_number]
+    computer_pick = random.choice(options)
     print("Computer picked", computer_pick + ".")
 
-    if user_input == "rock" and computer_pick == "scissors":
-        print("You won!")
+    if user_input == computer_pick:
+        print("It's a tie!")
+    elif (user_input == "rock" and computer_pick == "scissors") or (user_input == "paper" and computer_pick == "rock") or (user_input == "scissors" and computer_pick == "paper"):
+        print(f"{player_name} wins!")
         user_wins += 1
-        continue
-
-    elif user_input == "paper" and computer_pick == "rock":
-        print("You won!")
-        user_wins += 1
-        continue
-
-    elif user_input == "scissors" and computer_pick == "paper":
-        print("You won!")
-        user_wins += 1
-        continue
-
-    elif user_input == "scissors" and computer_pick == "scissors":
-        print("Draw!")
-        continue
-
-    elif user_input == "paper" and computer_pick == "paper":
-        print("Draw!")
-        continue
-
-    elif user_input == "rock" and computer_pick == "rock":
-        print("Draw!")
-        continue
-
     else:
-        print("You lost!")
+        print("Computer wins!")
         computer_wins += 1
 
-print("You won", user_win, "times!")
-print("The computer had", computer_wins, "times!")
-print("Goodbye!")
+    rounds_played += 1
+
+print(f"\nFinal score: {player_name}: {user_wins} | Computer: {computer_wins}")
+print("Thank you for playing!")

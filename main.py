@@ -1,37 +1,38 @@
+import tkinter as tk
 import random
 
-options = ["rock", "paper", "scissors"]
-user_wins = 0
-computer_wins = 0
-rounds_played = 0
-
-print("Welcome to Rock, Paper, Scissors!")
-player_name = input("Please enter your name: ")
-
-while True:
-    print(f"\nRound {rounds_played + 1} - {player_name}: {user_wins} | Computer: {computer_wins}\n")
-    user_input = input("Type 'rock', 'paper', or 'scissors' to play or 'quit' to exit: ").lower()
-
-    if user_input == "quit":
-        break
-
-    if user_input not in options:
-        print("Invalid input. Please try again.")
-        continue
-
+# Define the main function that plays the game
+def play_game(user_input):
+    options = ["rock", "paper", "scissors"]
     computer_pick = random.choice(options)
-    print("Computer picked", computer_pick + ".")
 
+    # Determine the winner
     if user_input == computer_pick:
-        print("It's a tie!")
+        result = "Draw!"
     elif (user_input == "rock" and computer_pick == "scissors") or (user_input == "paper" and computer_pick == "rock") or (user_input == "scissors" and computer_pick == "paper"):
-        print(f"{player_name} wins!")
-        user_wins += 1
+        result = "You won!"
     else:
-        print("Computer wins!")
-        computer_wins += 1
+        result = "You lost!"
 
-    rounds_played += 1
+    # Update the output label with the result and the computer's pick
+    output_label.config(text=f"Computer picked {computer_pick}. {result}")
 
-print(f"\nFinal score: {player_name}: {user_wins} | Computer: {computer_wins}")
-print("Thank you for playing!")
+# Create the main window
+root = tk.Tk()
+root.title("Rock-Paper-Scissors")
+
+# Create the UI elements
+instructions_label = tk.Label(root, text="Type Rock/Paper/Scissors and click Play:")
+instructions_label.pack()
+
+input_entry = tk.Entry(root)
+input_entry.pack()
+
+play_button = tk.Button(root, text="Play", command=lambda: play_game(input_entry.get().lower()))
+play_button.pack()
+
+output_label = tk.Label(root, text="")
+output_label.pack()
+
+# Start the main event loop
+root.mainloop()
